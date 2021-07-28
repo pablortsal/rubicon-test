@@ -1,31 +1,24 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import {
-    IonHeader,
-    IonToolbar,
     IonTitle,
     IonContent,
-    IonApp,
     IonList,
-    IonLabel,
-    IonItem,
     IonListHeader,
-    IonAvatar,
-    IonButton,
-    IonIcon,
+    useIonModal,
 } from "@ionic/react";
-import { checkmarkDoneOutline } from "ionicons/icons";
-
 import "./Main.scss";
 import { DocumentService } from "../../services/remote/DocumentService/DocuementsServices";
 import { DocumentData } from "../../models/Document";
 import { Consult } from "../../models/Consult";
-import { Link } from "react-router-dom";
 import DocumentItem from "../../components/DocumentItem/DocumentItem";
+import ImagePreview from "../../components/ImagePreview/ImagePreview";
 
 export default function Main() {
     const [consultsData, setConsultsData] = useState<
         Array<Consult> | undefined
     >();
+
+    const [present, dismiss] = useIonModal(ImagePreview, {});
 
     const getDocs = useCallback(async () => {
         setConsultsData(await DocumentService.getPendingDocuments());
@@ -34,14 +27,25 @@ export default function Main() {
     const getConsultsList = useCallback(
         (c: Consult) => {
             return (
-                <IonList key={c.id}>
-                    <IonListHeader>
-                        <IonTitle>{c.name}</IonTitle>
-                    </IonListHeader>
-                    {c.documents.map((d: DocumentData) => {
-                        return <DocumentItem key={d.id} d={d} c={c} />;
-                    })}
-                </IonList>
+                <div className="list-container">
+                    <IonList key={c.id}>
+                        <IonListHeader>
+                            <IonTitle>{c.name}</IonTitle>
+                        </IonListHeader>
+                        {c.documents.map((d: DocumentData) => {
+                            return (
+                                <DocumentItem
+                                    key={d.id}
+                                    d={d}
+                                    c={c}
+                                    onImageClick={() => {
+                                        present();
+                                    }}
+                                />
+                            );
+                        })}
+                    </IonList>
+                </div>
             );
         },
         [consultsData]
@@ -54,10 +58,23 @@ export default function Main() {
     return (
         <IonContent>
             <div className={` main-container`}>
-                {consultsData &&
-                    consultsData.map((c: Consult) => {
-                        return getConsultsList(c);
-                    })}
+                <div>
+                    {consultsData &&
+                        consultsData.map((c: Consult) => {
+                            return getConsultsList(c);
+                        })}
+                </div>
+                <div className="help-data">
+                    <h3>HELP</h3>
+                    <ul>
+                        <li>Click on the image to preview</li>
+                        <li>
+                            Click on no redaction needed if the preview its okai
+                        </li>
+                        <li>Redact if something need to be cover</li>
+                        <li>Click reset to restart de adventure</li>
+                    </ul>
+                </div>
             </div>
         </IonContent>
     );

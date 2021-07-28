@@ -1,14 +1,29 @@
 import React from "react";
 import { DocumentData } from "../../models/Document";
 import { IonItem, IonAvatar, IonIcon, IonButton } from "@ionic/react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Consult } from "../../models/Consult";
 import { checkmarkDoneOutline } from "ionicons/icons";
-
-function DocumentItem({ d, c }: { d: DocumentData; c: Consult }) {
+import "./DocumentItem.scss";
+function DocumentItem({
+    d,
+    c,
+    onImageClick,
+}: {
+    d: DocumentData;
+    c: Consult;
+    onImageClick?: any;
+}) {
+    const history = useHistory();
     return (
         <IonItem>
-            <IonAvatar slot="start">
+            <IonAvatar
+                class="avatar"
+                slot="start"
+                onClick={() => {
+                    if (onImageClick) onImageClick();
+                }}
+            >
                 {d.status == "checked" && (
                     <IonIcon
                         color="success"
@@ -26,11 +41,16 @@ function DocumentItem({ d, c }: { d: DocumentData; c: Consult }) {
             >
                 No redaction needed
             </IonButton>
-            <Link to={`detail/${c.id}/${d.id}`}>
-                <IonButton disabled={d.status == "checked"} color="secondary">
-                    Redact
-                </IonButton>
-            </Link>
+
+            <IonButton
+                onClick={() => {
+                    history.push(`detail/${c.id}/${d.id}`);
+                }}
+                disabled={d.status == "checked"}
+                color="secondary"
+            >
+                Redact
+            </IonButton>
         </IonItem>
     );
 }

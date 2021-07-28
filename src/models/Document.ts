@@ -9,6 +9,6 @@ export interface DocumentData {
 }
 
 export enum DocumentStatus {
-    CLEAN = "clean",
+    PENDING = "pending",
     CHECKED = "checked",
 }

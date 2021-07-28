@@ -1,12 +1,12 @@
 import { Mock } from "../../../mocks/documents";
+import { StorageService } from "../Storage/StorageSerivce";
 
 class ApiService {
-    public getRequest(): Promise<any> {
-        return new Promise((resolve, reject) => {
-            setTimeout(async () => {
-                resolve(Mock.data);
-            }, 1000);
-        });
+    public getRequest(key: string): Promise<any> {
+        return StorageService.getItem(key);
+    }
+    public patchRequest(key: string, data: any): Promise<any> {
+        return StorageService.updateItem(key, data);
     }
 }
 

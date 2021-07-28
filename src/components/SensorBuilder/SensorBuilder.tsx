@@ -5,9 +5,12 @@ import { DocumentData } from "../../models/Document";
 import { Sensor } from "../../models/Sensor";
 import { DetailContext } from "../../pages/Detail/Detail";
 import DraggableElement from "../DraggableElement/DraggableElement";
-export default function SensorBuilder() {
+import { DocumentService } from "../../services/remote/DocumentService/DocuementsServices";
+import { useHistory } from "react-router-dom";
+export default function SensorBuilder({ onDocumentCheck }: any) {
     const { document, setDocument } = useContext<any>(DetailContext);
     const documentDragRef = useRef(null);
+
     const canvasStyle = useMemo(() => {
         return {
             backgroundImage: `url(${document?.url})`,
@@ -18,7 +21,6 @@ export default function SensorBuilder() {
     }, [document]);
 
     const addSensor = function () {
-        console.log(documentDragRef);
         setDocument({
             ...document,
             sensors: [
@@ -66,7 +68,14 @@ export default function SensorBuilder() {
                 >
                     Add Sensor
                 </IonButton>
-                <IonButton size="large" color="success" fill="outline">
+                <IonButton
+                    size="large"
+                    color="success"
+                    fill="outline"
+                    onClick={() => {
+                        setDocument({ ...document, status: "checked" });
+                    }}
+                >
                     Done
                 </IonButton>
             </div>
