@@ -1,12 +1,17 @@
 # App Architecture
 
--   Components:
--   Mocks:
--   Models:
--   Pages:
+-   Components: App components
+-   Mocks: Mocked data to use instead of a backend
+-   Models: Data Models
+-   Pages: App pages
 -   Services:
-    -   Local:
-    -   Remote:
+    -   Local: Service that manage things related to the browser
+    -   Remote: Service that manage conexion to external service ( simulated )
+
+# TODO
+
+-   Manage DragnDrop component
+-   Preview image with Sensors on it
 
 ## DEV
 
