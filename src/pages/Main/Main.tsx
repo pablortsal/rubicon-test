@@ -18,7 +18,7 @@ export default function Main() {
         Array<Consult> | undefined
     >();
 
-    const [present, dismiss] = useIonModal(ImagePreview, {});
+    const [currentPreviewImage, setCurrentPreviewImage] = useState("");
 
     const getDocs = useCallback(async () => {
         setConsultsData(await DocumentService.getPendingDocuments());
@@ -31,6 +31,15 @@ export default function Main() {
         );
         getDocs();
     }, []);
+
+    const handleDismiss = () => {
+        dismiss();
+    };
+
+    const [present, dismiss] = useIonModal(ImagePreview, {
+        url: currentPreviewImage,
+        onDismiss: handleDismiss,
+    });
 
     const getConsultsList = useCallback(
         (c: Consult) => {
@@ -47,6 +56,7 @@ export default function Main() {
                                     d={d}
                                     c={c}
                                     onImageClick={() => {
+                                        setCurrentPreviewImage(d.url);
                                         present();
                                     }}
                                     onCheckReady={() => {

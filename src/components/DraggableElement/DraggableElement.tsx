@@ -21,28 +21,26 @@ export default function DraggableElement({
     const dragRef = useRef(null);
 
     useEffect(() => {
-        console.log(dragRef);
-        (dragRef.current as any).addEventListener("mousedown", (ev: any) => {
-            console.log("MOUSE DOWN");
-            setMoving(true);
-        });
-        document.addEventListener("mouseup", (ev: any) => {
-            console.log("MOUSE UP");
-
-            setMoving(false);
-        });
-        document.addEventListener("mousemove", (ev: any) => {
-            console.log(moving);
+        (dragRef.current as any).addEventListener("mouseup", (ev: any) => {
             if (moving) {
-                console.log(
-                    "🚀 ~ file: DraggableElement.tsx ~ line 17 ~ dragRef.current.onMouseDown ~ ev",
-                    ev.clientX,
-                    ev.clientY,
-                    moving
-                );
+                setMoving(false);
+            } else {
+                setMoving(true);
             }
         });
-    }, []);
+
+        (dragRef.current as any).addEventListener("mousemove", (ev: any) => {
+            if (moving) {
+                setSensor({
+                    ...sensor,
+                    mark: {
+                        x: ev.clientX - sensor.width,
+                        y: ev.clientY - sensor.height,
+                    },
+                });
+            }
+        });
+    }, [moving]);
 
     const getSensorStylePosition = useCallback(() => {
         return {
@@ -52,7 +50,7 @@ export default function DraggableElement({
             height: `${sensor.height}px`,
             backgroundColor: "red",
         };
-    }, []);
+    }, [sensor]);
 
     return (
         <div
