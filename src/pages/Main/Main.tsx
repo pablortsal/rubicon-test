@@ -20,6 +20,7 @@ import { DocumentService } from "../../services/remote/DocumentService/Docuement
 import { DocumentData } from "../../models/Document";
 import { Consult } from "../../models/Consult";
 import { Link } from "react-router-dom";
+import DocumentItem from "../../components/DocumentItem/DocumentItem";
 
 export default function Main() {
     const [consultsData, setConsultsData] = useState<
@@ -38,39 +39,7 @@ export default function Main() {
                         <IonTitle>{c.name}</IonTitle>
                     </IonListHeader>
                     {c.documents.map((d: DocumentData) => {
-                        return (
-                            <IonItem key={d.id}>
-                                <IonAvatar slot="start">
-                                    {d.status == "checked" && (
-                                        <IonIcon
-                                            color="success"
-                                            icon={checkmarkDoneOutline}
-                                            className="floating-icon"
-                                        ></IonIcon>
-                                    )}
-                                    <img
-                                        src={d.previewUrl}
-                                        alt="preview-imag"
-                                    />
-                                </IonAvatar>
-
-                                <IonButton
-                                    disabled={d.status == "checked"}
-                                    fill="outline"
-                                    color="primary"
-                                >
-                                    No redaction needed
-                                </IonButton>
-                                <Link to={`detail/${c.id}/${d.id}`}>
-                                    <IonButton
-                                        disabled={d.status == "checked"}
-                                        color="secondary"
-                                    >
-                                        Redact
-                                    </IonButton>
-                                </Link>
-                            </IonItem>
-                        );
+                        return <DocumentItem key={d.id} d={d} c={c} />;
                     })}
                 </IonList>
             );
