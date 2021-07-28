@@ -1,0 +1,25 @@
+.main-container-detail {
+    max-width: 996px;
+
+    margin: auto;
+    min-height: 80vh;
+    color: black;
+    padding: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    .done-button {
+        display: block;
+        margin: auto;
+    }
+}
+
+.image-container {
+    width: calc(100% - 32px);
+    height: calc(100vh - 150px);
+}
+
+.no-data {
+    text-align: center;
+}

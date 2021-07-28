@@ -1,8 +1,10 @@
+import { Mock } from "../../../mocks/documents";
+
 class ApiService {
-    public getRequest(url: string): Promise<any> {
+    public getRequest(): Promise<any> {
         return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                resolve({});
+            setTimeout(async () => {
+                resolve(Mock.data);
             }, 1000);
         });
     }

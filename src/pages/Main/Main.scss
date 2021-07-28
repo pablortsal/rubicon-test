@@ -1,0 +1,25 @@
+.logo {
+    margin-left: 16px;
+    width: 50px;
+}
+
+.main-container {
+    max-width: 996px;
+    display: block;
+    margin: auto;
+    min-height: 80vh;
+    color: black;
+
+    padding: 16px;
+}
+
+ion-avatar {
+    position: relative;
+    .floating-icon {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        font-size: 60px;
+        transform: translateX(-50%) translateY(-50%);
+    }
+}
