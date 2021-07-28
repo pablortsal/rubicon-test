@@ -23,6 +23,14 @@ export default function Main() {
     const getDocs = useCallback(async () => {
         setConsultsData(await DocumentService.getPendingDocuments());
     }, []);
+    const updateDoc = useCallback(async (d, c) => {
+        await DocumentService.updateDocument(
+            d.id,
+            { ...d, status: "checked" },
+            c.id
+        );
+        getDocs();
+    }, []);
 
     const getConsultsList = useCallback(
         (c: Consult) => {
@@ -40,6 +48,9 @@ export default function Main() {
                                     c={c}
                                     onImageClick={() => {
                                         present();
+                                    }}
+                                    onCheckReady={() => {
+                                        updateDoc(d, c);
                                     }}
                                 />
                             );

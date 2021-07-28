@@ -9,9 +9,11 @@ function DocumentItem({
     d,
     c,
     onImageClick,
+    onCheckReady,
 }: {
     d: DocumentData;
     c: Consult;
+    onCheckReady: any;
     onImageClick?: any;
 }) {
     const history = useHistory();
@@ -38,6 +40,7 @@ function DocumentItem({
                 disabled={d.status == "checked"}
                 fill="outline"
                 color="primary"
+                onClick={onCheckReady}
             >
                 No redaction needed
             </IonButton>
